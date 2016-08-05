@@ -10,8 +10,8 @@ public class Tile {
 		
 	}
 	
-	public static int getValue(char character){
-		return CHARACTER_VALUE[(int)character - 65];
+	public static int getScore(){
+		return CHARACTER_VALUE[(int)this.character - 65];
 	}
 	
 }
