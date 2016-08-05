@@ -11,9 +11,11 @@ public class Scrabble {
 			int noOfTestCases;
 			Scanner sc = new Scanner(System.in);
 			noOfTestCases = sc.nextInt();
-		//		for(i = 1; i <= noOfTestCases; i++) {
-				
-//		}
+			for(int i = 1; i <= noOfTestCases; i++) {
+				String input = sc.next();
+				Rack rack = new Rack(input);
+				System.out.println(rack.getMaxScore());
+			}
 	}
 
 }
