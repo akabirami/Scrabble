@@ -1,11 +1,28 @@
 # Scrabble
 
-Class Scrabble - gets input and calls rack class
-Class Rack - implements selecting the max scoring word
-Class Tile - Set individual scores
+##Scrabble
 
-Implementation:
+  Main class. Used to drive the Scrabble game.
+  Responsible for: 
+      - Creating Racks
+      - Getting maximum value of Racks
+      
+##Rack
+  
+  Rack class. Contains list of Tiles.
+  Handles the internal implementation of `getMaxValue()` for a rack
+  
+##Tile
+  
+  Granular level implementation of Tile along with value of that Tile.
+  
+##AnagramUtil
+  
+  Responsible for reading from `sowpods.txt` and creating a `HashMap` of all sorted keys.
+  
+  
+###Implementation:
 
-1) Sort the 7 letters
-2) take permutations and check for score
-3) select word with maximum score
+    - Sort the 7 letters
+    - Take permutations and check for score
+    - Select word with maximum score
