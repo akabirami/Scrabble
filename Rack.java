@@ -1,38 +1,63 @@
 package scrabble;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Rack {
 
 	private ArrayList<Tile> rack;
+	private static String str = "";
 	private static int score = Integer.MIN_VALUE;
 	private static Map<String, String> anagram;
 
 	public Rack(String s) {
-		ArrayList<Tile> rack = new ArrayList<Tile>();
+		rack = new ArrayList<Tile>();
 		for (int i = 0; i < s.length(); i++) {
 			Tile tile = new Tile(s.charAt(i));
-			rack.add(tile);
+			this.rack.add(tile);
 		}
 	}
+	
+	public String getMatch() {
+		return this.str;
+	}
+	
+	private static String sortLetters(String strLine) {
+		// TODO Auto-generated method stub
+		char[] chars = strLine.toCharArray();
+        Arrays.sort(chars);
+        String sorted = new String(chars).toLowerCase();
+		return sorted;
+	}
 
-	private int getScore(int[] index) {
-		int score = 0;
-		for (int i = 0; i < index.length; i++) {
-			score += rack.get(i).getValue();
+	private String getString(int[] indices, int r) {
+		String s = "";
+		for(int i=0; i<r; i++) {
+			s += String.valueOf(this.rack.get(indices[i]).getChar());
 		}
-		return score;
+		return sortLetters(s);
+	}
+	
+	private int getScore(int[] indices, int r) {
+		int score = 0;
+		String s = getString(indices, r);
+		if(this.anagram.containsKey(s)) {
+			for (int i = 0; i < indices.length; i++) {
+				score += rack.get(indices[i]).getValue();
+			}
+			this.str = s;
+			return score;
+		} else
+			return Integer.MIN_VALUE;
 	}
 
 	private void getSubScore(int arr[], int data[], int start, int end, int index, int r) {
 		// Current combination is ready to be printed, print it
 		if (index == r) {
-			for (int i = 0; i < r; i++)
-				System.out.print(data[i] + " ");
-			System.out.println();
-			// score = Integer.max(score, getScore(data));
+//			System.out.println(getString(data, r));
+			score = Integer.max(score, getScore(data, r));
 		}
 		for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
 			data[index] = arr[i];
