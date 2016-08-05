@@ -1,5 +1,8 @@
+package scrabble;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Rack {
 
@@ -49,10 +52,7 @@ public class Rack {
 		return score;
 	}
 
-	private void createAnagramMap() {
-		// TODO Auto-generated method stub
-		
+	private void createAnagramMap() {		
 		anagram = AnagramUtil.getMapOfWords();
-		
 	}
 }
