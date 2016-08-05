@@ -1,4 +1,3 @@
-package scrabble;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,35 +31,27 @@ public class Rack {
 		return sorted;
 	}
 
-	private ArrayList<String> getStrings(int[] indices, int r) {
-		ArrayList<String> st = new ArrayList<String>();
-		StringBuilder s = new StringBuilder();
+	private String getString(int[] indices, int r) {
+		String s = new String();
 		for(int i=0; i<r; i++) {
-			ArrayList<Character> chs = this.rack.get(indices[i]).getMatchChars();
-			for(char c : chs) {
-				s.insert(i, c);
-				st.add(sortLetters(s.toString()));
-			}
+			s += String.valueOf(this.rack.get(indices[i]).getChar());
 		}
-		return st;
+		return sortLetters(s);
 	}
 	
 	private int getScore(int[] indices, int r) {
 		int score = 0;
-		ArrayList<String> st = getStrings(indices, r);
+		String s = getString(indices, r);
 //		for(String s: st) {
 //			System.out.print(s+" ");
 //		}
-		System.out.println();
-		for(String s: st) {
-//			System.out.println(s);
-			if(this.anagram.containsKey(s)) {
-				for (int i = 0; i < indices.length; i++) {
-					score += rack.get(indices[i]).getValue();
-				}
-				this.str = s;
-				return score;
+		//System.out.println();
+
+		if(this.anagram.containsKey(s)) {
+			for (int i = 0; i < indices.length; i++) {
+				score += rack.get(indices[i]).getValue();
 			}
+			return score;
 		}
 		return Integer.MIN_VALUE;
 	}
@@ -68,8 +59,11 @@ public class Rack {
 	private void getSubScore(int arr[], int data[], int start, int end, int index, int r) {
 		// Current combination is ready to be printed, print it
 		if (index == r) {
-//			System.out.println(getString(data, r));
-			score = Integer.max(score, getScore(data, r));
+			//System.out.println(getString(data, r));
+			if(getScore(data, r) >= score) {
+				score = Integer.max(score, getScore(data, r));
+				this.str = getString(data, r);
+			}
 		}
 		for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
 			data[index] = arr[i];
@@ -90,6 +84,6 @@ public class Rack {
 	}
 
 	private void createAnagramMap() {		
-		anagram = AnagramUtil.getMapOfWords();
+		anagram = AnagramUtil.getMapOfWords(0);
 	}
 }

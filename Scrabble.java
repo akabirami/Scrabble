@@ -1,4 +1,3 @@
-package scrabble;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +14,7 @@ public class Scrabble {
 				String input = sc.next();
 				Rack rack = new Rack(input);
 				System.out.println(rack.getMaxScore());
-//				System.out.println(rack.getMatch());
+				System.out.println(rack.getMatch());
 			}
 	}
 }
