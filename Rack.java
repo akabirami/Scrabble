@@ -32,25 +32,37 @@ public class Rack {
 		return sorted;
 	}
 
-	private String getString(int[] indices, int r) {
-		String s = "";
+	private ArrayList<String> getStrings(int[] indices, int r) {
+		ArrayList<String> st = new ArrayList<String>();
+		StringBuilder s = new StringBuilder();
 		for(int i=0; i<r; i++) {
-			s += String.valueOf(this.rack.get(indices[i]).getChar());
+			ArrayList<Character> chs = this.rack.get(indices[i]).getMatchChars();
+			for(char c : chs) {
+				s.insert(i, c);
+				st.add(sortLetters(s.toString()));
+			}
 		}
-		return sortLetters(s);
+		return st;
 	}
 	
 	private int getScore(int[] indices, int r) {
 		int score = 0;
-		String s = getString(indices, r);
-		if(this.anagram.containsKey(s)) {
-			for (int i = 0; i < indices.length; i++) {
-				score += rack.get(indices[i]).getValue();
+		ArrayList<String> st = getStrings(indices, r);
+//		for(String s: st) {
+//			System.out.print(s+" ");
+//		}
+		System.out.println();
+		for(String s: st) {
+//			System.out.println(s);
+			if(this.anagram.containsKey(s)) {
+				for (int i = 0; i < indices.length; i++) {
+					score += rack.get(indices[i]).getValue();
+				}
+				this.str = s;
+				return score;
 			}
-			this.str = s;
-			return score;
-		} else
-			return Integer.MIN_VALUE;
+		}
+		return Integer.MIN_VALUE;
 	}
 
 	private void getSubScore(int arr[], int data[], int start, int end, int index, int r) {
